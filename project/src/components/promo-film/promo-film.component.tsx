@@ -31,7 +31,7 @@ export default function PromoFilm({ promo }: PropsWithChildren<{ promo: IFilmDat
             </p>
 
             <div className="film-card__buttons">
-              <PlayButton videoLink={promo.videoLink}/>
+              <PlayButton filmId={promo.id} videoLink={promo.videoLink}/>
               <MyListButton filmId={promo.id} isFavorite={promo.isFavorite}/>
             </div>
           </div>

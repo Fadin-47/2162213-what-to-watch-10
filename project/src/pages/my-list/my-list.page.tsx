@@ -1,10 +1,9 @@
 import {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import FilmCardComponent, {IFilmCardProps} from '../../components/film-card/film-card.component';
-import { IUser } from '../../components/app/app';
+//import FilmCardComponent from '../../components/film-card/film-card.component';
 
-function MyListPage(props: { filmsCard: IFilmCardProps[], user: IUser }) {
+function MyListPage() {
   return (
     <Fragment>
       <div className="visually-hidden">
@@ -73,7 +72,7 @@ function MyListPage(props: { filmsCard: IFilmCardProps[], user: IUser }) {
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src={props.user.avatarUrl} alt={props.user.name} width="63" height="63"/>
+                {/*<img src={props.user.avatarUrl} alt={props.user.name} width="63" height="63"/>*/}
               </div>
             </li>
             <li className="user-block__item">
@@ -86,11 +85,11 @@ function MyListPage(props: { filmsCard: IFilmCardProps[], user: IUser }) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__films-list">
-            {props.filmsCard.map((film, index) => (
-              index < 9
-                ? <FilmCardComponent key={`film-${film.title}`} filmCard={film}/>
-                : null
-            ))}
+            {/*{props.filmsCard.map((film, index) => (*/}
+            {/*  index < 9*/}
+            {/*    ? <FilmCardComponent key={`film-${film.title}`} filmCard={film}/>*/}
+            {/*    : null*/}
+            {/*))}*/}
           </div>
         </section>
 

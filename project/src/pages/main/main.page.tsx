@@ -1,29 +1,18 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import FilmCardComponent from '../../components/film-card/film-card.component';
-import {initStore} from '../../components/app/app';
 import { AppRoute, FavoriteAction } from '../../const';
 import {Link} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilms, getPromo, getSimilar, getSingleFilm } from '../../store/films/films.api-actions';
-import { getFavorite, postFavorite } from '../../store/favorite/favorite.api-actions';
+import { getFavorite, getFilms, getPromo, getSimilar, getSingleFilm, postFavorite } from '../../store/films/films.api-actions';
 import PromoFilm from '../../components/promo-film/promo-film.component';
-import { selectPromo } from '../../store/films/films.selector';
-
-export interface IHeadFilmMainProps {
-  title: string;
-  genre: string;
-  yearOfIssue: string;
-  img: {
-    src: string;
-    width: string;
-    height: string;
-  };
-}
+import { filterGenreFilms, selectPromo } from '../../store/films/films.selector';
+import SideMenuComponent from '../../components/side-menu/side-menu.component';
 
 
-function MainPage({ headFilm, filmCard, user }: initStore): JSX.Element {
+function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const promoFilm = useAppSelector(selectPromo);
+  const filteredFilms = useAppSelector(filterGenreFilms);
   useEffect(() => {
     dispatch(getFilms());
     dispatch(getSingleFilm({filmId: 1}));
@@ -33,6 +22,24 @@ function MainPage({ headFilm, filmCard, user }: initStore): JSX.Element {
     dispatch(postFavorite({ filmId: 2,
       status: FavoriteAction.ADD}));
   }, [dispatch]);
+
+  const [showMore, setShowMore] = useState<number>(0);
+  useEffect(() => {
+    if (filteredFilms.length) {
+      filteredFilms.length > 7 ? setShowMore(7) : setShowMore(filteredFilms.length);
+    }
+  }, [filteredFilms]);
+  // eslint-disable-next-line no-console
+  console.log(filteredFilms.length);
+  // eslint-disable-next-line no-console
+  console.log(showMore);
+  const onShowMore = () => {
+    if ((showMore + 8) > filteredFilms.length) {
+      setShowMore(filteredFilms.length);
+    } else {
+      setShowMore(showMore + 8);
+    }
+  };
   return (
     <Fragment>
       {promoFilm && (
@@ -41,54 +48,33 @@ function MainPage({ headFilm, filmCard, user }: initStore): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#top" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#top" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
-
+          <SideMenuComponent/>
           <div className="catalog__films-list">
-            {filmCard.map( (film) => (
-              <FilmCardComponent
-                key={`film-${film.title}`}
-                filmCard={film}
-              />
-            ))}
+            {filteredFilms.map((film, index) => {
+              if (index <= showMore ) {
+                return (
+                  <FilmCardComponent
+                    key={`film-${film.name}`}
+                    filmCard={film}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
           </div>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {showMore !== filteredFilms.length && (
+            <div className="catalog__more">
+              <button
+                onClick={onShowMore}
+                className="catalog__button"
+                type="button"
+              >
+                Show more
+              </button>
+            </div>
+          )}
         </section>
-
         <footer className="page-footer">
           <div className="logo">
             <Link className="logo__link logo__link--light" to={AppRoute.Main}>

@@ -1,13 +1,13 @@
 import { Fragment } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAuthorizationStatus, getUserData } from '../../store/user-process/user-process.selectors';
+import { selectAuthorizationStatus, selectUserData } from '../../store/user-process/user-process.selectors';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { logOutAction } from '../../store/user-process/user-process.api-actions';
 
 export default function UserComponent(): JSX.Element {
-  const userData = useAppSelector(getUserData);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(selectUserData);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const dispatch = useAppDispatch();
   return(
     <Fragment>

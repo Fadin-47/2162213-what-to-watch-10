@@ -5,12 +5,12 @@ import { IAuthData } from '../../types/auth-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/user-process/user-process.api-actions';
 import { useInputValidation } from '../../hooks/use-input-validation';
-import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
 function SignInPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const auth = useAppSelector(getAuthorizationStatus);
+  const auth = useAppSelector(selectAuthorizationStatus);
 
   useEffect(() => {
     if (auth === AuthorizationStatus.Auth) {

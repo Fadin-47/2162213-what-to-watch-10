@@ -1,4 +1,4 @@
-import MainPage, {IHeadFilmMainProps} from '../../pages/main/main.page';
+import MainPage from '../../pages/main/main.page';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import ErrorNotFound from '../../pages/error-not-found/error-not-found';
 import { AppRoute } from '../../const';
@@ -8,37 +8,18 @@ import MyListPage from '../../pages/my-list/my-list.page';
 import MoviePage from '../../pages/movie/movie.page';
 import AddReviewPage from '../../pages/add-review/add-review.page';
 import PlayerPage from '../../pages/player/player.page';
-import {IFilmCardProps} from '../film-card/film-card.component';
 import { useAppSelector } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
-export interface IUser {
-  avatarUrl: string;
-  email: string;
-  id: number;
-  name: string;
-  token: string;
-}
-
-export interface initStore {
-  headFilm: IHeadFilmMainProps;
-  filmCard: IFilmCardProps[];
-  user: IUser;
-}
-
-function App(props: initStore): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+function App(): JSX.Element {
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage
-              headFilm={props.headFilm}
-              filmCard={props.filmCard}
-              user={props.user}
-            />
+            <MainPage/>
           }
         />
         <Route path={AppRoute.Login} element={<SignInPage/>} />
@@ -46,20 +27,20 @@ function App(props: initStore): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoutes isAuth={authorizationStatus}>
-              <MyListPage filmsCard={props.filmCard} user={props.user}/>
+              <MyListPage/>
             </PrivateRoutes>
           }
         />
-        <Route path={AppRoute.Film} element={<MoviePage filmsCard={props.filmCard} user={props.user}/>}/>
+        <Route path={AppRoute.Film} element={<MoviePage/>}/>
         <Route
           path={AppRoute.AddReview}
           element={
             <PrivateRoutes isAuth={authorizationStatus}>
-              <AddReviewPage filmsCard={props.filmCard} user={props.user}/>
+              <AddReviewPage/>
             </PrivateRoutes>
           }
         />
-        <Route path={AppRoute.Player} element={<PlayerPage filmsCard={props.filmCard}/>} />
+        <Route path={AppRoute.Player} element={<PlayerPage/>} />
         <Route path='*' element={<ErrorNotFound/>} />
       </Routes>
     </BrowserRouter>

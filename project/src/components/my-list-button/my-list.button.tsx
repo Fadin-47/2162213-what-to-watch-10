@@ -1,8 +1,9 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { getFavorite, postFavorite } from '../../store/favorite/favorite.api-actions';
-import { FavoriteAction } from '../../const';
+import { AuthorizationStatus, FavoriteAction } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectFavorites } from '../../store/favorite/favorite.selector';
+import { getFavorite, postFavorite } from '../../store/films/films.api-actions';
+import { selectFavorites } from '../../store/films/films.selector';
+import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
 export default function MyListButton({filmId, isFavorite}: PropsWithChildren<{filmId: number, isFavorite: boolean}>) {
   const dispatch = useAppDispatch();
@@ -13,13 +14,14 @@ export default function MyListButton({filmId, isFavorite}: PropsWithChildren<{fi
   }, [dispatch]);
 
   const favorite = useAppSelector(selectFavorites);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   const onPostFavorite = () => {
     dispatch(postFavorite({ filmId: filmId, status: isFavorite ? FavoriteAction.REMOTE : FavoriteAction.ADD}));
   };
-  //TODO не обновляется фильм промо при отправке, подумать
   return (
     <button
+      disabled={authorizationStatus !== AuthorizationStatus.Auth}
       onClick={onPostFavorite}
       className="btn btn--list film-card__button"
       type="button"

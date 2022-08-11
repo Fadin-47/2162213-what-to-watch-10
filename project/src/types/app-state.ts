@@ -19,13 +19,12 @@ export interface IFilmsStore {
   requestGetSimilarStatus: RequestStatus,
   promo: IFilmData | null,
   requestGetPromoStatus: RequestStatus,
-}
-
-export interface IFavoriteStore {
   favorites: IFilmData[],
   requestGetFavoriteStatus: RequestStatus,
   requestPostFavoriteStatus: RequestStatus,
+  selectGenre: null| string,
 }
+
 
 export interface ICommentStore {
   comments: ICommentData[],

@@ -1,13 +1,11 @@
 import {Fragment} from 'react';
-import {IFilmCardProps} from '../../components/film-card/film-card.component';
-import {useParams, Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import CommentSubmissionFormComponent from '../../components/comment-submission-form/comment-submission-form.component';
-import { IUser } from '../../components/app/app';
+// import { Link} from 'react-router-dom';
+// import {AppRoute} from '../../const';
+// import CommentSubmissionFormComponent from '../../components/comment-submission-form/comment-submission-form.component';
 
-function AddReviewPage(props: { filmsCard: IFilmCardProps[], user: IUser }) {
-  const params = useParams();
-  const changeFilm = props.filmsCard.find((film) => film.linkPage === params.id);
+function AddReviewPage() {
+  //const params = useParams();
+
 
   return (
     <Fragment>
@@ -60,60 +58,60 @@ function AddReviewPage(props: { filmsCard: IFilmCardProps[], user: IUser }) {
           </symbol>
         </svg>
       </div>
-      {changeFilm && (
-        <section className="film-card film-card--full">
-          <div className="film-card__header">
-            <div className="film-card__bg">
-              <img src={changeFilm.img.src} alt={changeFilm.title}/>
-            </div>
+      {/*{changeFilm && (*/}
+      {/*  <section className="film-card film-card--full">*/}
+      {/*    <div className="film-card__header">*/}
+      {/*      <div className="film-card__bg">*/}
+      {/*        <img src={changeFilm.img.src} alt={changeFilm.title}/>*/}
+      {/*      </div>*/}
 
-            <h1 className="visually-hidden">WTW</h1>
+      {/*      <h1 className="visually-hidden">WTW</h1>*/}
 
-            <header className="page-header">
-              <div className="logo">
-                <Link to={AppRoute.Main} className="logo__link">
-                  <span className="logo__letter logo__letter--1">W</span>
-                  <span className="logo__letter logo__letter--2">T</span>
-                  <span className="logo__letter logo__letter--3">W</span>
-                </Link>
-              </div>
+      {/*      <header className="page-header">*/}
+      {/*        <div className="logo">*/}
+      {/*          <Link to={AppRoute.Main} className="logo__link">*/}
+      {/*            <span className="logo__letter logo__letter--1">W</span>*/}
+      {/*            <span className="logo__letter logo__letter--2">T</span>*/}
+      {/*            <span className="logo__letter logo__letter--3">W</span>*/}
+      {/*          </Link>*/}
+      {/*        </div>*/}
 
-              <nav className="breadcrumbs">
-                <ul className="breadcrumbs__list">
-                  <li className="breadcrumbs__item">
-                    <Link to={`/films/${params.id}`} className="breadcrumbs__link">{changeFilm.title}</Link>
-                  </li>
-                  <li className="breadcrumbs__item">
-                    <Link className="breadcrumbs__link" to={`/films/${params.id}/review`}>Add review</Link>
-                  </li>
-                </ul>
-              </nav>
+      {/*        <nav className="breadcrumbs">*/}
+      {/*          <ul className="breadcrumbs__list">*/}
+      {/*            <li className="breadcrumbs__item">*/}
+      {/*              <Link to={`/films/${params.id}`} className="breadcrumbs__link">{changeFilm.title}</Link>*/}
+      {/*            </li>*/}
+      {/*            <li className="breadcrumbs__item">*/}
+      {/*              <Link className="breadcrumbs__link" to={`/films/${params.id}/review`}>Add review</Link>*/}
+      {/*            </li>*/}
+      {/*          </ul>*/}
+      {/*        </nav>*/}
 
-              <ul className="user-block">
-                <li className="user-block__item">
-                  <div className="user-block__avatar">
-                    <img src={props.user.avatarUrl} alt={props.user.name} width="63" height="63"/>
-                  </div>
-                </li>
-                <li className="user-block__item">
-                  <Link className="user-block__link" to={AppRoute.Login}>Sign out</Link>
-                </li>
-              </ul>
-            </header>
+      {/*        <ul className="user-block">*/}
+      {/*          <li className="user-block__item">*/}
+      {/*            <div className="user-block__avatar">*/}
+      {/*              <img src={props.user.avatarUrl} alt={props.user.name} width="63" height="63"/>*/}
+      {/*            </div>*/}
+      {/*          </li>*/}
+      {/*          <li className="user-block__item">*/}
+      {/*            <Link className="user-block__link" to={AppRoute.Login}>Sign out</Link>*/}
+      {/*          </li>*/}
+      {/*        </ul>*/}
+      {/*      </header>*/}
 
-            <div className="film-card__poster film-card__poster--small">
-              <img
-                src={changeFilm.img.src}
-                alt={changeFilm.img.src}
-                width="218"
-                height="327"
-              />
-            </div>
-          </div>
-          <CommentSubmissionFormComponent/>
+      {/*      <div className="film-card__poster film-card__poster--small">*/}
+      {/*        <img*/}
+      {/*          src={changeFilm.img.src}*/}
+      {/*          alt={changeFilm.img.src}*/}
+      {/*          width="218"*/}
+      {/*          height="327"*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <CommentSubmissionFormComponent/>*/}
 
-        </section>
-      )}
+      {/*  </section>*/}
+      {/*)}*/}
     </Fragment>
   );
 }
