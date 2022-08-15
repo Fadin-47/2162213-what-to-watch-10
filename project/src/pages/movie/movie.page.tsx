@@ -1,18 +1,41 @@
-import {Fragment} from 'react';
-//import {useParams} from 'react-router-dom';
-// import {AppRoute} from '../../const';
-// import {Link} from 'react-router-dom';
-// import FilmCardComponent from '../../components/film-card/film-card.component';
+import { Fragment, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getSimilar, getSingleFilm } from '../../store/films/films.api-actions';
+import { selectSimilar, selectSingleFilm } from '../../store/films/films.selector';
+import HeaderComponent from '../../components/header/header.component';
+import MyListButton from '../../components/my-list-button/my-list.button';
+import PlayButton from '../../components/play-button/play.button';
+import TabPanelMoreInfoFilmComponent
+  from '../../components/tab-panel-more-info-film/tab-panel-more-info-film.component';
+import FooterComponent from '../../components/footer/footer.component';
+import FilmCardComponent from '../../components/film-card/film-card.component';
+import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { AuthorizationStatus } from '../../const';
+import { setInitSingleFilm } from '../../store/films/films.reducer';
 
 
 function MoviePage(): JSX.Element {
-  //const params = useParams();
-  //const changeFilm = props.filmsCard.find((film) => film.linkPage === params.id);
+  const params = useParams();
+  const dispacth = useAppDispatch();
+  const singleFilm = useAppSelector(selectSingleFilm);
+  const similarFilms = useAppSelector(selectSimilar);
+  const auth = useAppSelector(selectAuthorizationStatus);
+
+  useEffect(() => {
+    if (params.id) {
+      dispacth(getSingleFilm({filmId: params.id}));
+      dispacth(getSimilar({filmId: params.id}));
+    }
+  },[dispacth, params.id]);
+
+  useEffect(() => () => {
+    dispacth(setInitSingleFilm());
+  }, []);
 
   return (
     <Fragment>
       <div className="visually-hidden">
-
         <svg xmlns="http://www.w3.org/2000/svg">
           <use xlinkHref="http://www.w3.org/1999/xlink"/>
           <symbol id="add" viewBox="0 0 19 20">
@@ -64,141 +87,64 @@ function MoviePage(): JSX.Element {
             </g>
           </symbol>
         </svg>
-
       </div>
-      {/*{changeFilm && (*/}
-      {/*  <Fragment>*/}
-      {/*    <section className="film-card film-card--full">*/}
-      {/*      <div className="film-card__hero">*/}
-      {/*        <div className="film-card__bg">*/}
-      {/*          <img src={changeFilm.img.src} alt={changeFilm.title}/>*/}
-      {/*        </div>*/}
+      {singleFilm && (
+        <Fragment>
+          <section className="film-card film-card--full">
+            <div className="film-card__hero">
+              <div className="film-card__bg">
+                <img src={singleFilm.posterImage} alt={singleFilm.name}/>
+              </div>
 
-      {/*        <h1 className="visually-hidden">WTW</h1>*/}
+              <h1 className="visually-hidden">WTW</h1>
+              <HeaderComponent/>
 
-      {/*        <header className="page-header film-card__head">*/}
-      {/*          <div className="logo">*/}
-      {/*            <Link to={AppRoute.Main} className="logo__link">*/}
-      {/*              <span className="logo__letter logo__letter--1">W</span>*/}
-      {/*              <span className="logo__letter logo__letter--2">T</span>*/}
-      {/*              <span className="logo__letter logo__letter--3">W</span>*/}
-      {/*            </Link>*/}
-      {/*          </div>*/}
+              <div className="film-card__wrap">
+                <div className="film-card__desc">
+                  <h2 className="film-card__title">{singleFilm.name}</h2>
+                  <p className="film-card__meta">
+                    <span className="film-card__genre">{singleFilm.genre}</span>
+                    <span className="film-card__year">{singleFilm.released}</span>
+                  </p>
 
-      {/*          <ul className="user-block">*/}
-      {/*            <li className="user-block__item">*/}
-      {/*              <div className="user-block__avatar">*/}
-      {/*                <img src={props.user.avatarUrl} alt={props.user.name} width="63" height="63"/>*/}
-      {/*              </div>*/}
-      {/*            </li>*/}
-      {/*            <li className="user-block__item">*/}
-      {/*              <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>*/}
-      {/*            </li>*/}
-      {/*          </ul>*/}
-      {/*        </header>*/}
+                  <div className="film-card__buttons">
+                    <PlayButton filmId={singleFilm.id} videoLink={singleFilm.videoLink}/>
+                    <MyListButton filmId={singleFilm.id} isFavorite={singleFilm.isFavorite}/>
+                    {auth === AuthorizationStatus.Auth && (
+                      <Link to={`/films/${singleFilm.id}/review`} className="btn film-card__button">
+                        Add review
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      {/*        <div className="film-card__wrap">*/}
-      {/*          <div className="film-card__desc">*/}
-      {/*            <h2 className="film-card__title">{changeFilm.title}</h2>*/}
-      {/*            <p className="film-card__meta">*/}
-      {/*              <span className="film-card__genre">{changeFilm.genre}</span>*/}
-      {/*              <span className="film-card__year">{changeFilm.yearOfIssue}</span>*/}
-      {/*            </p>*/}
+            <div className="film-card__wrap film-card__translate-top">
+              <div className="film-card__info">
+                <div className="film-card__poster film-card__poster--big">
+                  <img src={singleFilm.previewImage} alt={singleFilm.name} width="218" height="327"/>
+                </div>
+                <TabPanelMoreInfoFilmComponent singleFilm={singleFilm}/>
+              </div>
+            </div>
+          </section>
 
-      {/*            <div className="film-card__buttons">*/}
-      {/*              <Link to={`/player/${changeFilm.id}`} style={{ textDecoration: 'none' }}>*/}
-      {/*                <button className="btn btn--play film-card__button" type="button">*/}
-      {/*                  <svg viewBox="0 0 19 19" width="19" height="19">*/}
-      {/*                    <use xlinkHref="#play-s"></use>*/}
-      {/*                  </svg>*/}
-      {/*                  <span>Play</span>*/}
-      {/*                </button>*/}
-      {/*              </Link>*/}
-      {/*              <button className="btn btn--list film-card__button" type="button">*/}
-      {/*                <svg viewBox="0 0 19 20" width="19" height="20">*/}
-      {/*                  <use xlinkHref="#add"></use>*/}
-      {/*                </svg>*/}
-      {/*                <span>My list</span>*/}
-      {/*                <span className="film-card__count">9</span>*/}
-      {/*              </button>*/}
-      {/*              <Link to={`/films/${changeFilm.id}/review`} className="btn film-card__button">Add review</Link>*/}
-      {/*            </div>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-
-      {/*      <div className="film-card__wrap film-card__translate-top">*/}
-      {/*        <div className="film-card__info">*/}
-      {/*          <div className="film-card__poster film-card__poster--big">*/}
-      {/*            <img src={changeFilm.img.src} alt={changeFilm.title} width="218"*/}
-      {/*              height="327"*/}
-      {/*            />*/}
-      {/*          </div>*/}
-
-      {/*          <div className="film-card__desc">*/}
-      {/*            <nav className="film-nav film-card__nav">*/}
-      {/*              <ul className="film-nav__list">*/}
-      {/*                <li className="film-nav__item film-nav__item--active">*/}
-      {/*                  <a href="#top" className="film-nav__link">Overview</a>*/}
-      {/*                </li>*/}
-      {/*                <li className="film-nav__item">*/}
-      {/*                  <a href="#top" className="film-nav__link">Details</a>*/}
-      {/*                </li>*/}
-      {/*                <li className="film-nav__item">*/}
-      {/*                  <a href="#top" className="film-nav__link">Reviews</a>*/}
-      {/*                </li>*/}
-      {/*              </ul>*/}
-      {/*            </nav>*/}
-
-      {/*            <div className="film-rating">*/}
-      {/*              <div className="film-rating__score">{changeFilm.rating}</div>*/}
-      {/*              <p className="film-rating__meta">*/}
-      {/*                <span className="film-rating__level">{ Number(changeFilm.rating) > 6 ? 'Very good' : 'Normal'}</span>*/}
-      {/*                <span className="film-rating__count">{`${Math.round((Math.random() * 100))} ratings`}</span>*/}
-      {/*              </p>*/}
-      {/*            </div>*/}
-
-      {/*            <div className="film-card__text">*/}
-      {/*              <p>{changeFilm.description}</p>*/}
-      {/*              <p className="film-card__director"><strong>{`Director: ${changeFilm.director}`}</strong></p>*/}
-
-      {/*              <p className="film-card__starring">*/}
-      {/*                <strong>{`Starring: ${changeFilm.starring.join(', ')}*/}
-      {/*                  and other`}*/}
-      {/*                </strong>*/}
-      {/*              </p>*/}
-      {/*            </div>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-      {/*    </section>*/}
-
-      {/*    <div className="page-content">*/}
-      {/*      <section className="catalog catalog--like-this">*/}
-      {/*        <h2 className="catalog__title">More like this</h2>*/}
-      {/*        <div className="catalog__films-list">*/}
-      {/*          {props.filmsCard.filter((genreFilm) => genreFilm.genre === changeFilm.genre).map((film) => (*/}
-      {/*            <FilmCardComponent key={`film-${film.title}`} filmCard={film} />*/}
-      {/*          ))}*/}
-      {/*        </div>*/}
-      {/*      </section>*/}
-
-      {/*      <footer className="page-footer">*/}
-      {/*        <div className="logo">*/}
-      {/*          <Link to={AppRoute.Main} className="logo__link logo__link--light">*/}
-      {/*            <span className="logo__letter logo__letter--1">W</span>*/}
-      {/*            <span className="logo__letter logo__letter--2">T</span>*/}
-      {/*            <span className="logo__letter logo__letter--3">W</span>*/}
-      {/*          </Link>*/}
-      {/*        </div>*/}
-
-      {/*        <div className="copyright">*/}
-      {/*          <p>© 2019 What to watch Ltd.</p>*/}
-      {/*        </div>*/}
-      {/*      </footer>*/}
-      {/*    </div>*/}
-      {/*  </Fragment>*/}
-      {/*)}*/}
+          <div className="page-content">
+            <section className="catalog catalog--like-this">
+              <h2 className="catalog__title">More like this</h2>
+              <div className="catalog__films-list">
+                {singleFilm && similarFilms.filter((similar) => similar.id !== singleFilm.id).map((similar, index) => (
+                  index < 4
+                    ? <FilmCardComponent key={`film-${similar.name}`} filmCard={similar}/>
+                    : null
+                ))}
+              </div>
+            </section>
+            <FooterComponent/>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 }

@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useState } from 'react';
 import FilmCardComponent from '../../components/film-card/film-card.component';
-import { AppRoute, FavoriteAction } from '../../const';
-import {Link} from 'react-router-dom';
+import { FavoriteAction } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavorite, getFilms, getPromo, getSimilar, getSingleFilm, postFavorite } from '../../store/films/films.api-actions';
+import { getFavorite, getFilms, getPromo, postFavorite } from '../../store/films/films.api-actions';
 import PromoFilm from '../../components/promo-film/promo-film.component';
 import { filterGenreFilms, selectPromo } from '../../store/films/films.selector';
 import SideMenuComponent from '../../components/side-menu/side-menu.component';
+import FooterComponent from '../../components/footer/footer.component';
 
 
 function MainPage(): JSX.Element {
@@ -15,8 +15,6 @@ function MainPage(): JSX.Element {
   const filteredFilms = useAppSelector(filterGenreFilms);
   useEffect(() => {
     dispatch(getFilms());
-    dispatch(getSingleFilm({filmId: 1}));
-    dispatch(getSimilar({filmId: 1}));
     dispatch(getPromo());
     dispatch(getFavorite());
     dispatch(postFavorite({ filmId: 2,
@@ -29,10 +27,7 @@ function MainPage(): JSX.Element {
       filteredFilms.length > 7 ? setShowMore(7) : setShowMore(filteredFilms.length);
     }
   }, [filteredFilms]);
-  // eslint-disable-next-line no-console
-  console.log(filteredFilms.length);
-  // eslint-disable-next-line no-console
-  console.log(showMore);
+
   const onShowMore = () => {
     if ((showMore + 8) > filteredFilms.length) {
       setShowMore(filteredFilms.length);
@@ -75,19 +70,7 @@ function MainPage(): JSX.Element {
             </div>
           )}
         </section>
-        <footer className="page-footer">
-          <div className="logo">
-            <Link className="logo__link logo__link--light" to={AppRoute.Main}>
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <FooterComponent/>
       </div>
     </Fragment>
   );

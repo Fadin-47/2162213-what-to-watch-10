@@ -16,7 +16,7 @@ export const getFilms = createAsyncThunk<IFilmData[], undefined, {
   }
 );
 
-export const getSingleFilm = createAsyncThunk<IFilmData, { filmId: number }, {
+export const getSingleFilm = createAsyncThunk<IFilmData, { filmId: string }, {
   dispatch: AppDispatch,
   state: AppState,
   extra: AxiosInstance,
@@ -28,7 +28,7 @@ export const getSingleFilm = createAsyncThunk<IFilmData, { filmId: number }, {
   }
 );
 
-export const getSimilar = createAsyncThunk<IFilmData[], { filmId: number }, {
+export const getSimilar = createAsyncThunk<IFilmData[], { filmId: string }, {
   dispatch: AppDispatch,
   state: AppState,
   extra: AxiosInstance,

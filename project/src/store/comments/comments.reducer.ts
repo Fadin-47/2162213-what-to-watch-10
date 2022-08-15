@@ -1,6 +1,6 @@
 import { ICommentStore } from '../../types/app-state';
 import { NameSpace, RequestStatus } from '../../const';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getComments, postComment } from './comments.api-actions';
 
 const initialState: ICommentStore = {
@@ -12,7 +12,11 @@ const initialState: ICommentStore = {
 export const CommentsReducer = createSlice({
   name: NameSpace.Comments,
   initialState,
-  reducers: {},
+  reducers: {
+    setRequestPostCommentStatus: (state: ICommentStore, action: PayloadAction<RequestStatus>) => {
+      state.requestPostCommentStatus = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getComments.pending, (state) => {
@@ -31,9 +35,14 @@ export const CommentsReducer = createSlice({
       .addCase(postComment.fulfilled, (state, action) => {
         state.requestPostCommentStatus = RequestStatus.SUCCESS;
         state.comments = action.payload;
+        setTimeout(() => {
+          setRequestPostCommentStatus(RequestStatus.IDLE);
+        }, 1000);
       })
       .addCase(postComment.rejected, (state) => {
         state.requestPostCommentStatus = RequestStatus.ERROR;
       });
   },
 });
+
+export const { setRequestPostCommentStatus } = CommentsReducer.actions;

@@ -22,8 +22,8 @@ function SignInPage() {
     dispatch(loginAction(inputAuthData));
   };
 
-  const email = useInputValidation('', { isEmail: true, isEmpty: true, minLength: 5});
-  const password = useInputValidation('', { isPassword: true, isEmpty: true, minLength: 2});
+  const email = useInputValidation('', { isEmail: true, isEmpty: true, minLength: 5, maxLength: 15});
+  const password = useInputValidation('', { isPassword: true, isEmpty: true, minLength: 2, maxLength: 12});
 
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

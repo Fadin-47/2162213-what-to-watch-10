@@ -31,7 +31,9 @@ function App(): JSX.Element {
             </PrivateRoutes>
           }
         />
-        <Route path={AppRoute.Film} element={<MoviePage/>}/>
+        <Route path={AppRoute.Film} element={<MoviePage/>}>
+          <Route path=':id' element={<MoviePage/>}/>
+        </Route>
         <Route
           path={AppRoute.AddReview}
           element={

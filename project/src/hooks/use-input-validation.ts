@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 export interface IValidationsProperties {
   minLength: number;
+  maxLength: number;
   isEmpty: boolean;
   isEmail?: boolean;
   isPassword?: boolean;
@@ -10,6 +11,7 @@ export interface IValidationsProperties {
 const useValidation = (value: string, validations: IValidationsProperties) => {
   const [isEmpty, setEmpty] = useState(true);
   const [minLength, setMinLength] = useState(false);
+  const [maxLength, setMaxLength] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [inputValid, setInputValid] = useState(false);
@@ -20,6 +22,9 @@ const useValidation = (value: string, validations: IValidationsProperties) => {
       switch (validation) {
         case 'minLength':
           value.length < validations[validation] ? setMinLength(true) : setMinLength(false);
+          break;
+        case 'maxLength':
+          value.length > validations[validation] ? setMaxLength(true) : setMaxLength(false);
           break;
         case 'isEmpty':
           value ? setEmpty(false) : setEmpty(true);
@@ -35,16 +40,17 @@ const useValidation = (value: string, validations: IValidationsProperties) => {
   }, [value]);
 
   useEffect(() => {
-    if (isEmpty || minLength || emailError || passwordError) {
+    if (isEmpty || minLength || emailError || passwordError || maxLength) {
       setInputValid(false);
     } else {
       setInputValid(true);
     }
-  }, [isEmpty, minLength, emailError, passwordError]);
+  }, [isEmpty, minLength, maxLength, emailError, passwordError]);
 
   return {
     isEmpty,
     minLength,
+    maxLength,
     emailError,
     passwordError,
     inputValid,
@@ -56,11 +62,11 @@ export const useInputValidation = (initValue: string, validations: IValidationsP
   const [isDirty, setDirty] = useState(false);
   const valid = useValidation(value, validations);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDirty(true);
   };
 

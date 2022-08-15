@@ -1,0 +1,19 @@
+.small-film-card__image {
+  position: relative;
+  z-index: 1;
+  height: 175px; }
+.small-film-card__image::after {
+  content: '';
+  position: relative;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(25%, rgba(0, 0, 0, 0)), color-stop(97%, rgba(0, 0, 0, 0.63)));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.63) 97%);
+}
+
+.video:hover {
+  opacity: 0;
+}

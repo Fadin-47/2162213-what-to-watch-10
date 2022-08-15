@@ -1,11 +1,21 @@
-import {Fragment} from 'react';
-// import { Link} from 'react-router-dom';
-// import {AppRoute} from '../../const';
-// import CommentSubmissionFormComponent from '../../components/comment-submission-form/comment-submission-form.component';
+import { Fragment, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import CommentSubmissionFormComponent from '../../components/comment-submission-form/comment-submission-form.component';
+import { getSingleFilm } from '../../store/films/films.api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectSingleFilm } from '../../store/films/films.selector';
+import HeaderComponent from '../../components/header/header.component';
 
 function AddReviewPage() {
-  //const params = useParams();
+  const params = useParams();
+  const dispacth = useAppDispatch();
+  const singleFilm = useAppSelector(selectSingleFilm);
 
+  useEffect(() => {
+    if (params.id) {
+      dispacth(getSingleFilm({filmId: params.id}));
+    }
+  },[dispacth, params.id]);
 
   return (
     <Fragment>
@@ -58,60 +68,30 @@ function AddReviewPage() {
           </symbol>
         </svg>
       </div>
-      {/*{changeFilm && (*/}
-      {/*  <section className="film-card film-card--full">*/}
-      {/*    <div className="film-card__header">*/}
-      {/*      <div className="film-card__bg">*/}
-      {/*        <img src={changeFilm.img.src} alt={changeFilm.title}/>*/}
-      {/*      </div>*/}
+      {singleFilm && (
+        <section className="film-card film-card--full">
+          <div className="film-card__header">
+            <div className="film-card__bg">
+              <img src={singleFilm.posterImage} alt={singleFilm.name}/>
+            </div>
 
-      {/*      <h1 className="visually-hidden">WTW</h1>*/}
+            <h1 className="visually-hidden">WTW</h1>
 
-      {/*      <header className="page-header">*/}
-      {/*        <div className="logo">*/}
-      {/*          <Link to={AppRoute.Main} className="logo__link">*/}
-      {/*            <span className="logo__letter logo__letter--1">W</span>*/}
-      {/*            <span className="logo__letter logo__letter--2">T</span>*/}
-      {/*            <span className="logo__letter logo__letter--3">W</span>*/}
-      {/*          </Link>*/}
-      {/*        </div>*/}
+            <HeaderComponent/>
 
-      {/*        <nav className="breadcrumbs">*/}
-      {/*          <ul className="breadcrumbs__list">*/}
-      {/*            <li className="breadcrumbs__item">*/}
-      {/*              <Link to={`/films/${params.id}`} className="breadcrumbs__link">{changeFilm.title}</Link>*/}
-      {/*            </li>*/}
-      {/*            <li className="breadcrumbs__item">*/}
-      {/*              <Link className="breadcrumbs__link" to={`/films/${params.id}/review`}>Add review</Link>*/}
-      {/*            </li>*/}
-      {/*          </ul>*/}
-      {/*        </nav>*/}
+            <div className="film-card__poster film-card__poster--small">
+              <img
+                src={singleFilm.previewImage}
+                alt={singleFilm.name}
+                width="218"
+                height="327"
+              />
+            </div>
+          </div>
+          <CommentSubmissionFormComponent filmId={singleFilm.id}/>
 
-      {/*        <ul className="user-block">*/}
-      {/*          <li className="user-block__item">*/}
-      {/*            <div className="user-block__avatar">*/}
-      {/*              <img src={props.user.avatarUrl} alt={props.user.name} width="63" height="63"/>*/}
-      {/*            </div>*/}
-      {/*          </li>*/}
-      {/*          <li className="user-block__item">*/}
-      {/*            <Link className="user-block__link" to={AppRoute.Login}>Sign out</Link>*/}
-      {/*          </li>*/}
-      {/*        </ul>*/}
-      {/*      </header>*/}
-
-      {/*      <div className="film-card__poster film-card__poster--small">*/}
-      {/*        <img*/}
-      {/*          src={changeFilm.img.src}*/}
-      {/*          alt={changeFilm.img.src}*/}
-      {/*          width="218"*/}
-      {/*          height="327"*/}
-      {/*        />*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <CommentSubmissionFormComponent/>*/}
-
-      {/*  </section>*/}
-      {/*)}*/}
+        </section>
+      )}
     </Fragment>
   );
 }

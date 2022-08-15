@@ -12,6 +12,8 @@ export const getComments = createAsyncThunk<ICommentData[], {filmId: number},{
   'comments/getComments',
   async ({ filmId }, {dispatch, extra: API}) => {
     const { data } = await API.get<ICommentData[]>(`${APIRoute.Comments}/${filmId}`);
+    // eslint-disable-next-line no-console
+    console.log(data);
     return data;
   }
 );

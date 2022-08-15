@@ -26,6 +26,9 @@ export const FilmReducer = createSlice({
     setChangeGenre: (state: IFilmsStore, action: PayloadAction<string | null>) => {
       state.selectGenre = action.payload;
     },
+    setInitSingleFilm: (state: IFilmsStore) => {
+      state.singleFilm = null;
+    },
   },
   extraReducers(builder) {
     builder
@@ -101,6 +104,11 @@ export const FilmReducer = createSlice({
             state.promo = action.payload;
           }
         }
+        if (state.singleFilm) {
+          if (state.singleFilm.id === action.payload.id) {
+            state.singleFilm = action.payload;
+          }
+        }
       })
       .addCase(postFavorite.rejected, (state) => {
         state.requestPostFavoriteStatus = RequestStatus.ERROR;
@@ -108,4 +116,4 @@ export const FilmReducer = createSlice({
   }
 });
 
-export const { setChangeGenre } = FilmReducer.actions;
+export const { setChangeGenre, setInitSingleFilm } = FilmReducer.actions;
