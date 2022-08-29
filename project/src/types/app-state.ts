@@ -3,11 +3,13 @@ import { AuthorizationStatus, RequestStatus } from '../const';
 import { IFilmData } from './film-data';
 import { ICommentData } from './comment-data';
 import { IUserData } from './user-data';
+import { IToasts } from '../components/toasts/toasts.component';
 
 
 export interface IUserProcessStore {
   authorizationStatus: AuthorizationStatus,
   userData: IUserData | null,
+  requestError: IToasts | null
 }
 
 export interface IFilmsStore {

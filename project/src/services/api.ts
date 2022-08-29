@@ -1,6 +1,9 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {StatusCodes} from 'http-status-codes';
 import { getToken } from './token';
+import { store } from '../store';
+import { setRequestError } from '../store/user-process/user-process.reducer';
+import { NameSeverity } from '../components/toasts/toasts.component';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -8,7 +11,7 @@ const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.NOT_FOUND]: true
 };
 
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+const shouldDisplayError = (response: AxiosResponse) => StatusCodeMapping[response.status];
 
 const BASE_URL_DEV = 'https://10.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
@@ -24,7 +27,7 @@ export const createAPI = (): AxiosInstance => {
       const token = getToken();
 
       if (token) {
-        config.headers['x-token'] = token;
+        config.headers['X-Token'] = token;
       }
 
       return config;
@@ -35,7 +38,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError) => {
       if (error.response && shouldDisplayError(error.response)) {
-        //TODO: добавить всплытие ошибки;
+        store.dispatch(setRequestError({severity: NameSeverity.ERROR, message: error.response.data.error}));
       }
 
       throw error;

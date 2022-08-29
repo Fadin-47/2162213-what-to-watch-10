@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { FormEvent, useEffect } from 'react';
 import { IAuthData } from '../../types/auth-data';
@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/user-process/user-process.api-actions';
 import { useInputValidation } from '../../hooks/use-input-validation';
 import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import LogoComponent from '../../components/logo/logo.component';
+import FooterComponent from '../../components/footer/footer.component';
 
 function SignInPage() {
   const dispatch = useAppDispatch();
@@ -16,7 +18,7 @@ function SignInPage() {
     if (auth === AuthorizationStatus.Auth) {
       navigate(AppRoute.Main);
     }
-  }, [auth]);
+  }, [auth, navigate]);
 
   const onSubmit = (inputAuthData: IAuthData) => {
     dispatch(loginAction(inputAuthData));
@@ -37,14 +39,7 @@ function SignInPage() {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <div className="logo">
-          <Link to={AppRoute.Main} className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
-
+        <LogoComponent/>
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
 
@@ -93,20 +88,7 @@ function SignInPage() {
           </div>
         </form>
       </div>
-
-      <footer className="page-footer">
-        <div className="logo">
-          <Link to={AppRoute.Main} className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <FooterComponent/>
     </div>
   );
 }

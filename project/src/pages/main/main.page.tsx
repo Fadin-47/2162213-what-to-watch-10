@@ -1,8 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import FilmCardComponent from '../../components/film-card/film-card.component';
-import { FavoriteAction } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavorite, getFilms, getPromo, postFavorite } from '../../store/films/films.api-actions';
+import { getFavorite, getFilms, getPromo } from '../../store/films/films.api-actions';
 import PromoFilm from '../../components/promo-film/promo-film.component';
 import { filterGenreFilms, selectPromo } from '../../store/films/films.selector';
 import SideMenuComponent from '../../components/side-menu/side-menu.component';
@@ -17,8 +16,6 @@ function MainPage(): JSX.Element {
     dispatch(getFilms());
     dispatch(getPromo());
     dispatch(getFavorite());
-    dispatch(postFavorite({ filmId: 2,
-      status: FavoriteAction.ADD}));
   }, [dispatch]);
 
   const [showMore, setShowMore] = useState<number>(0);

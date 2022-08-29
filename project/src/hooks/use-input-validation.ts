@@ -37,7 +37,7 @@ const useValidation = (value: string, validations: IValidationsProperties) => {
           break;
       }
     }
-  }, [value]);
+  }, [value, validations]);
 
   useEffect(() => {
     if (isEmpty || minLength || emailError || passwordError || maxLength) {

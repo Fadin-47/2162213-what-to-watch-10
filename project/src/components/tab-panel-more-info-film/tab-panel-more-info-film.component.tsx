@@ -13,10 +13,9 @@ export default function TabPanelMoreInfoFilmComponent({singleFilm}: PropsWithChi
     setTab(chooseTab);
   };
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(singleFilm.id);
     dispatch(getComments({filmId: singleFilm.id}));
   }, [dispatch, singleFilm.id]);
+
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">

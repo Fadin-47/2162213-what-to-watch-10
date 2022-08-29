@@ -20,7 +20,7 @@ function CommentSubmissionFormComponent({filmId}: PropsWithChildren<{filmId: num
       navigate(`/films/${filmId}`);
       dispatch(setRequestPostCommentStatus(RequestStatus.IDLE));
     }
-  }, [dispatch, requestPostCommentStatus]);
+  }, [dispatch, requestPostCommentStatus, filmId, navigate]);
 
   const handleRating = (event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value);
   const handlePostReview = (e: React.MouseEvent<HTMLButtonElement>) => {

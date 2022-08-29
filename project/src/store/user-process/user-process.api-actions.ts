@@ -28,7 +28,6 @@ export const loginAction = createAsyncThunk<IUserData, IAuthData, {
     const {data} = await API.post<IUserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
     return data;
-    //TODO: redirect to page reg
   }
 );
 

@@ -28,14 +28,13 @@ function FilmCardComponent({ filmCard }: PropsWithChildren<{ filmCard: IFilmData
     clearTimeout(timerId);
   };
 
-  //TODO: проработать показ видео
   return (
     <article
       onMouseOver={handleSelectedFilm}
       className="small-film-card catalog__films-card"
     >
       <Link
-        to={pathname.length === 1 ? `/films/${filmCard.id}` : filmCard.id.toString()}
+        to={`/films/${filmCard.id}`}
         key={filmCard.id}
       >
         <div

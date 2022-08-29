@@ -24,9 +24,11 @@ export default function UserComponent(): JSX.Element {
       {authorizationStatus === AuthorizationStatus.Auth && userData && (
         <ul className="user-block">
           <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src={userData.avatarUrl} alt={userData.name} width="63" height="63"/>
-            </div>
+            <Link to={AppRoute.MyList}>
+              <div className="user-block__avatar">
+                <img src={userData.avatarUrl} alt={userData.name} width="63" height="63"/>
+              </div>
+            </Link>
           </li>
           <li className="user-block__item">
             <div

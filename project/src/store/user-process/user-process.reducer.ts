@@ -1,17 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, NameSpace } from '../../const';
 import { IUserProcessStore } from '../../types/app-state';
 import { checkAuthAction, loginAction, logOutAction } from './user-process.api-actions';
+import { IToasts } from '../../components/toasts/toasts.component';
 
 const initialState: IUserProcessStore = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
+  requestError: null
 };
 
 export const UserProcessReducer = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
+  reducers: {
+    setRequestError: (state: IUserProcessStore, action: PayloadAction<IToasts | null>) => {
+      state.requestError = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state, action) => {
@@ -34,3 +40,5 @@ export const UserProcessReducer = createSlice({
       });
   },
 });
+
+export const { setRequestError } = UserProcessReducer.actions;

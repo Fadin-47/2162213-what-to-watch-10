@@ -17,21 +17,21 @@ import { setInitSingleFilm } from '../../store/films/films.reducer';
 
 function MoviePage(): JSX.Element {
   const params = useParams();
-  const dispacth = useAppDispatch();
+  const dispatch = useAppDispatch();
   const singleFilm = useAppSelector(selectSingleFilm);
   const similarFilms = useAppSelector(selectSimilar);
   const auth = useAppSelector(selectAuthorizationStatus);
 
   useEffect(() => {
     if (params.id) {
-      dispacth(getSingleFilm({filmId: params.id}));
-      dispacth(getSimilar({filmId: params.id}));
+      dispatch(getSingleFilm({filmId: params.id}));
+      dispatch(getSimilar({filmId: params.id}));
     }
-  },[dispacth, params.id]);
+  },[dispatch, params.id]);
 
   useEffect(() => () => {
-    dispacth(setInitSingleFilm());
-  }, []);
+    dispatch(setInitSingleFilm());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -97,7 +97,7 @@ function MoviePage(): JSX.Element {
               </div>
 
               <h1 className="visually-hidden">WTW</h1>
-              <HeaderComponent/>
+              <HeaderComponent styleHeader={'page-header film-card__head'}/>
 
               <div className="film-card__wrap">
                 <div className="film-card__desc">
