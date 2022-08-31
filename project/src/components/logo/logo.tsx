@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-export default function LogoComponent({ styleLogo = 'logo' }: PropsWithChildren<{styleLogo?: string}>) {
+export default function Logo({ styleLogo = 'logo' }: PropsWithChildren<{styleLogo?: string}>) {
   return (
     <div className={styleLogo}>
       <Link className="logo__link" to={AppRoute.Main}>

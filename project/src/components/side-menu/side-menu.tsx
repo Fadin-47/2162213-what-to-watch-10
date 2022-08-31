@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectAllGenres, selectGenre } from '../../store/films/films.selector';
 import { setChangeGenre } from '../../store/films/films.reducer';
 
-export default function SideMenuComponent() {
+export default function SideMenu() {
   const dispatch = useAppDispatch();
   const allGenre = useAppSelector(selectAllGenres);
   const choseGenre = useAppSelector(selectGenre);
@@ -20,7 +20,7 @@ export default function SideMenuComponent() {
             : 'catalog__genres-item'
         }
       >
-        <a style={{ cursor: 'pointer' }} onClick={onChangeGenre(null)} className="catalog__genres-link">All genres</a>
+        <a href="javascript:void(0);" style={{ cursor: 'pointer' }} onClick={onChangeGenre(null)} className="catalog__genres-link">All genres</a>
       </li>
       {allGenre.map((genre) => (
         <li
@@ -31,7 +31,7 @@ export default function SideMenuComponent() {
               : 'catalog__genres-item'
           }
         >
-          <a style={{ cursor: 'pointer' }} onClick={onChangeGenre(genre)} className="catalog__genres-link">{genre}</a>
+          <a href="javascript:void(0);" style={{ cursor: 'pointer' }} onClick={onChangeGenre(genre)} className="catalog__genres-link">{genre}</a>
         </li>
       ))}
     </ul>

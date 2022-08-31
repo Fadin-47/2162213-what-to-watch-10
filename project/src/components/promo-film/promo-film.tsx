@@ -1,8 +1,8 @@
 import { IFilmData } from '../../types/film-data';
 import { PropsWithChildren } from 'react';
-import HeaderComponent from '../header/header.component';
-import PlayButton from '../play-button/play.button';
-import MyListButton from '../my-list-button/my-list.button';
+import Header from '../header/header';
+import PlayButton from '../play-button/play-button';
+import MyListButton from '../my-list-button/my-list-button';
 
 export default function PromoFilm({ promo }: PropsWithChildren<{ promo: IFilmData }>): JSX.Element {
   return (
@@ -11,7 +11,7 @@ export default function PromoFilm({ promo }: PropsWithChildren<{ promo: IFilmDat
         <img src={promo.backgroundImage} alt={promo.name}/>
       </div>
       <h1 className="visually-hidden">WTW</h1>
-      <HeaderComponent styleHeader={'page-header film-card__head'}/>
+      <Header styleHeader={'page-header film-card__head'}/>
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
@@ -31,7 +31,7 @@ export default function PromoFilm({ promo }: PropsWithChildren<{ promo: IFilmDat
             </p>
 
             <div className="film-card__buttons">
-              <PlayButton filmId={promo.id} videoLink={promo.videoLink}/>
+              <PlayButton filmId={promo.id}/>
               <MyListButton filmId={promo.id} isFavorite={promo.isFavorite}/>
             </div>
           </div>

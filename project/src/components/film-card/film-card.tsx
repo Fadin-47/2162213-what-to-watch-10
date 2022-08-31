@@ -1,26 +1,18 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IFilmData } from '../../types/film-data';
 import './film-card.css';
 
-function FilmCardComponent({ filmCard }: PropsWithChildren<{ filmCard: IFilmData }>): JSX.Element {
-  const [selectedFilm, setSelectedFilm] = useState<number | null>( null);
+function FilmCard({ filmCard }: PropsWithChildren<{ filmCard: IFilmData }>): JSX.Element {
   const [isHovering, setIsHovering] = useState(false);
-  const handleSelectedFilm = () => setSelectedFilm(filmCard.id);
   const {pathname} = useLocation();
-  const onAutoPlayVideo = (e: React.MouseEvent<HTMLVideoElement>) => {
-    e.currentTarget.play();
-  };
-  const onAutoPauseVideo = (e: React.MouseEvent<HTMLVideoElement>) => {
-    e.currentTarget.pause();
-    e.currentTarget.currentTime = 0;
-  };
+  const videoPreview = useRef<HTMLVideoElement>(null);
   let timerId: NodeJS.Timeout;
 
   const handleMouseEnter = () => {
     timerId = setTimeout(() => {
       setIsHovering(true);
-    }, 2000);
+    }, 1500);
   };
 
   const handleMouseLeave = () => {
@@ -28,9 +20,21 @@ function FilmCardComponent({ filmCard }: PropsWithChildren<{ filmCard: IFilmData
     clearTimeout(timerId);
   };
 
+  useEffect(() => {
+    if (videoPreview && videoPreview.current) {
+      if (isHovering) {
+        videoPreview.current.play();
+      } else {
+        videoPreview.current.pause();
+        videoPreview.current.currentTime = 0;
+      }
+    }
+  }, [isHovering, videoPreview]);
+
   return (
     <article
-      onMouseOver={handleSelectedFilm}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="small-film-card catalog__films-card"
     >
       <Link
@@ -39,8 +43,6 @@ function FilmCardComponent({ filmCard }: PropsWithChildren<{ filmCard: IFilmData
       >
         <div
           className='small-film-card__image'
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           <img
             style={{
@@ -59,8 +61,7 @@ function FilmCardComponent({ filmCard }: PropsWithChildren<{ filmCard: IFilmData
               opacity: isHovering ? 1 : 0,
               zIndex: 1000,
             }}
-            onMouseOver={onAutoPlayVideo}
-            onMouseOut={onAutoPauseVideo}
+            ref={videoPreview}
             loop
             muted
             width="280"
@@ -76,11 +77,12 @@ function FilmCardComponent({ filmCard }: PropsWithChildren<{ filmCard: IFilmData
           to={pathname.length === 1 ? `/films/${filmCard.id}` : filmCard.id.toString()}
           key={filmCard.id}
         >
-          {filmCard.name}{selectedFilm}
+          {filmCard.name}
         </Link>
       </h3>
+
     </article>
   );
 }
 
-export default FilmCardComponent;
+export default FilmCard;

@@ -3,19 +3,19 @@ import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSimilar, getSingleFilm } from '../../store/films/films.api-actions';
 import { selectSimilar, selectSingleFilm } from '../../store/films/films.selector';
-import HeaderComponent from '../../components/header/header.component';
-import MyListButton from '../../components/my-list-button/my-list.button';
-import PlayButton from '../../components/play-button/play.button';
-import TabPanelMoreInfoFilmComponent
-  from '../../components/tab-panel-more-info-film/tab-panel-more-info-film.component';
-import FooterComponent from '../../components/footer/footer.component';
-import FilmCardComponent from '../../components/film-card/film-card.component';
+import Header from '../../components/header/header';
+import MyListButton from '../../components/my-list-button/my-list-button';
+import PlayButton from '../../components/play-button/play-button';
+import TabPanelMoreInfoFilm
+  from '../../components/tab-panel-more-info-film/tab-panel-more-info-film';
+import Footer from '../../components/footer/footer';
+import FilmCard from '../../components/film-card/film-card';
 import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { AuthorizationStatus } from '../../const';
 import { setInitSingleFilm } from '../../store/films/films.reducer';
 
 
-function MoviePage(): JSX.Element {
+function Movie(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
   const singleFilm = useAppSelector(selectSingleFilm);
@@ -97,7 +97,7 @@ function MoviePage(): JSX.Element {
               </div>
 
               <h1 className="visually-hidden">WTW</h1>
-              <HeaderComponent styleHeader={'page-header film-card__head'}/>
+              <Header styleHeader={'page-header film-card__head'}/>
 
               <div className="film-card__wrap">
                 <div className="film-card__desc">
@@ -108,7 +108,7 @@ function MoviePage(): JSX.Element {
                   </p>
 
                   <div className="film-card__buttons">
-                    <PlayButton filmId={singleFilm.id} videoLink={singleFilm.videoLink}/>
+                    <PlayButton filmId={singleFilm.id}/>
                     <MyListButton filmId={singleFilm.id} isFavorite={singleFilm.isFavorite}/>
                     {auth === AuthorizationStatus.Auth && (
                       <Link to={`/films/${singleFilm.id}/review`} className="btn film-card__button">
@@ -125,7 +125,7 @@ function MoviePage(): JSX.Element {
                 <div className="film-card__poster film-card__poster--big">
                   <img src={singleFilm.previewImage} alt={singleFilm.name} width="218" height="327"/>
                 </div>
-                <TabPanelMoreInfoFilmComponent singleFilm={singleFilm}/>
+                <TabPanelMoreInfoFilm singleFilm={singleFilm}/>
               </div>
             </div>
           </section>
@@ -136,12 +136,12 @@ function MoviePage(): JSX.Element {
               <div className="catalog__films-list">
                 {singleFilm && similarFilms.filter((similar) => similar.id !== singleFilm.id).map((similar, index) => (
                   index < 4
-                    ? <FilmCardComponent key={`film-${similar.name}`} filmCard={similar}/>
+                    ? <FilmCard key={`film-${similar.name}`} filmCard={similar}/>
                     : null
                 ))}
               </div>
             </section>
-            <FooterComponent/>
+            <Footer/>
           </div>
         </Fragment>
       )}
@@ -149,4 +149,4 @@ function MoviePage(): JSX.Element {
   );
 }
 
-export default MoviePage;
+export default Movie;

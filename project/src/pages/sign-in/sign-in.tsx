@@ -6,10 +6,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/user-process/user-process.api-actions';
 import { useInputValidation } from '../../hooks/use-input-validation';
 import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
-import LogoComponent from '../../components/logo/logo.component';
-import FooterComponent from '../../components/footer/footer.component';
+import Logo from '../../components/logo/logo';
+import Footer from '../../components/footer/footer';
 
-function SignInPage() {
+function SignIn() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const auth = useAppSelector(selectAuthorizationStatus);
@@ -39,7 +39,7 @@ function SignInPage() {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <LogoComponent/>
+        <Logo/>
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
 
@@ -88,9 +88,9 @@ function SignInPage() {
           </div>
         </form>
       </div>
-      <FooterComponent/>
+      <Footer/>
     </div>
   );
 }
 
-export default SignInPage;
+export default SignIn;

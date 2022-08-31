@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { logOutAction } from '../../store/user-process/user-process.api-actions';
 
-export default function UserComponent(): JSX.Element {
+export default function User(): JSX.Element {
   const userData = useAppSelector(selectUserData);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const dispatch = useAppDispatch();

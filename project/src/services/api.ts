@@ -3,7 +3,7 @@ import {StatusCodes} from 'http-status-codes';
 import { getToken } from './token';
 import { store } from '../store';
 import { setRequestError } from '../store/user-process/user-process.reducer';
-import { NameSeverity } from '../components/toasts/toasts.component';
+import { NameSeverity } from '../const';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,

@@ -1,13 +1,13 @@
-import MainPage from '../../pages/main/main.page';
+import Main from '../../pages/main/main';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import ErrorNotFound from '../../pages/error-not-found/error-not-found';
 import { AppRoute } from '../../const';
-import SignInPage from '../../pages/sign-in/sign-in.page';
+import SignIn from '../../pages/sign-in/sign-in';
 import PrivateRoutes from '../private-routes/private-routes';
-import MyListPage from '../../pages/my-list/my-list.page';
-import MoviePage from '../../pages/movie/movie.page';
-import AddReviewPage from '../../pages/add-review/add-review.page';
-import PlayerPage from '../../pages/player/player.page';
+import MyList from '../../pages/my-list/my-list';
+import Movie from '../../pages/movie/movie';
+import AddReview from '../../pages/add-review/add-review';
+import Player from '../../pages/player/player';
 import { useAppSelector } from '../../hooks';
 import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
@@ -19,30 +19,30 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage/>
+            <Main/>
           }
         />
-        <Route path={AppRoute.Login} element={<SignInPage/>} />
+        <Route path={AppRoute.Login} element={<SignIn/>} />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoutes isAuth={authorizationStatus}>
-              <MyListPage/>
+              <MyList/>
             </PrivateRoutes>
           }
         />
-        <Route path={AppRoute.Film} element={<MoviePage/>}>
-          <Route path=':id' element={<MoviePage/>}/>
+        <Route path={AppRoute.Film} element={<Movie/>}>
+          <Route path=':id' element={<Movie/>}/>
         </Route>
         <Route
           path={AppRoute.AddReview}
           element={
             <PrivateRoutes isAuth={authorizationStatus}>
-              <AddReviewPage/>
+              <AddReview/>
             </PrivateRoutes>
           }
         />
-        <Route path={AppRoute.Player} element={<PlayerPage/>} />
+        <Route path={AppRoute.Player} element={<Player/>} />
         <Route path='*' element={<ErrorNotFound/>} />
       </Routes>
     </BrowserRouter>

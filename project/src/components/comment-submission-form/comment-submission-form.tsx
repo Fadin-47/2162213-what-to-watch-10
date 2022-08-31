@@ -3,13 +3,13 @@ import { useInputValidation } from '../../hooks/use-input-validation';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postComment } from '../../store/comments/comments.api-actions';
 import { selectRequestPostCommentStatus } from '../../store/comments/comments.selector';
-import { RequestStatus } from '../../const';
+import { MAX_LENGTH_REVIEW, MIN_LENGTH_REVIEW, RequestStatus } from '../../const';
 import { useNavigate } from 'react-router-dom';
 import { setRequestPostCommentStatus } from '../../store/comments/comments.reducer';
-import LoaderComponent from '../loader/loader.component';
+import Loader from '../loader/loader';
 
 
-function CommentSubmissionFormComponent({filmId}: PropsWithChildren<{filmId: number}>) {
+function CommentSubmissionForm({filmId}: PropsWithChildren<{filmId: number}>) {
   const dispatch = useAppDispatch();
   const requestPostCommentStatus = useAppSelector(selectRequestPostCommentStatus);
   const navigate = useNavigate();
@@ -33,9 +33,7 @@ function CommentSubmissionFormComponent({filmId}: PropsWithChildren<{filmId: num
       filmId: filmId
     }));
   };
-  const MAX_LENGTH = 400;
-  const MIN_LENGTH = 50;
-  const reviewText = useInputValidation('', { isEmpty: true, minLength: MIN_LENGTH, maxLength: MAX_LENGTH});
+  const reviewText = useInputValidation('', { isEmpty: true, minLength: MIN_LENGTH_REVIEW, maxLength: MAX_LENGTH_REVIEW});
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
@@ -73,8 +71,8 @@ function CommentSubmissionFormComponent({filmId}: PropsWithChildren<{filmId: num
           </div>
         </div>
         <div>
-          {reviewText.maxLength && reviewText.isDirty && <div>Превышенно количество символов. Максимум {MAX_LENGTH}</div>}
-          {reviewText.minLength && reviewText.isDirty && <div>Не достаточное количество символов. Минимум {MIN_LENGTH}</div>}
+          {reviewText.maxLength && reviewText.isDirty && <div>Превышенно количество символов. Максимум {MAX_LENGTH_REVIEW}</div>}
+          {reviewText.minLength && reviewText.isDirty && <div>Не достаточное количество символов. Минимум {MIN_LENGTH_REVIEW}</div>}
           {requestPostCommentStatus === RequestStatus.ERROR && (
             <div>Ошибка оправки запроса</div>
           )}
@@ -104,11 +102,11 @@ function CommentSubmissionFormComponent({filmId}: PropsWithChildren<{filmId: num
       </form>
       {requestPostCommentStatus === RequestStatus.LOADING && (
         <div style={{ display: 'flex', justifyItems: 'center', marginTop: 16}}>
-          <LoaderComponent/>
+          <Loader/>
         </div>
       )}
     </div>
   );
 }
 
-export default CommentSubmissionFormComponent;
+export default CommentSubmissionForm;

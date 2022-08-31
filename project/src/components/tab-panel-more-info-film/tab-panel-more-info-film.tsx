@@ -3,8 +3,10 @@ import { IFilmData } from '../../types/film-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getComments } from '../../store/comments/comments.api-actions';
 import { selectComments } from '../../store/comments/comments.selector';
+import displayRating from '../../helpers/display-rating';
+import { tabPanelNames } from '../../const';
 
-export default function TabPanelMoreInfoFilmComponent({singleFilm}: PropsWithChildren<{singleFilm: IFilmData}>) {
+export default function TabPanelMoreInfoFilm({singleFilm}: PropsWithChildren<{singleFilm: IFilmData}>) {
   const dispatch = useAppDispatch();
   const comments = useAppSelector(selectComments);
   const [tab, setTab] = useState(0);
@@ -19,34 +21,20 @@ export default function TabPanelMoreInfoFilmComponent({singleFilm}: PropsWithChi
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
+
         <ul className="film-nav__list">
-          <li
-            className={
-              tab === 0
-                ? 'film-nav__item film-nav__item--active'
-                : 'film-nav__item'
-            }
-          >
-            <a style={{ cursor: 'pointer' }} onClick={onChangeGenre(0)} className="film-nav__link">Overview</a>
-          </li>
-          <li
-            className={
-              tab === 1
-                ? 'film-nav__item film-nav__item--active'
-                : 'film-nav__item'
-            }
-          >
-            <a style={{ cursor: 'pointer' }} onClick={onChangeGenre(1)} className="film-nav__link">Details</a>
-          </li>
-          <li
-            className={
-              tab === 2
-                ? 'film-nav__item film-nav__item--active'
-                : 'film-nav__item'
-            }
-          >
-            <a style={{ cursor: 'pointer' }} onClick={onChangeGenre(2)} className="film-nav__link">Reviews</a>
-          </li>
+          {tabPanelNames.map((name, index) => (
+            <li
+              key={name}
+              className={
+                tab === index
+                  ? 'film-nav__item film-nav__item--active'
+                  : 'film-nav__item'
+              }
+            >
+              <a href="javascript:void(0);" style={{ cursor: 'pointer' }} onClick={onChangeGenre(index)} className="film-nav__link">{name}</a>
+            </li>
+          ))}
         </ul>
       </nav>
       {tab === 0 && (
@@ -134,17 +122,3 @@ export default function TabPanelMoreInfoFilmComponent({singleFilm}: PropsWithChi
   );
 }
 
-function displayRating (rating: number): string {
-  if (rating <= 3) {
-    return 'Bad';
-  } else if (rating > 3 && rating <= 5) {
-    return 'Normal';
-  } else if (rating > 5 && rating <= 8) {
-    return 'Good';
-  } else if (rating > 8 && rating <= 9) {
-    return 'Very good';
-  } else if (rating > 10) {
-    return 'Awesome';
-  }
-  return '';
-}

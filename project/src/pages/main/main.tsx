@@ -1,14 +1,14 @@
 import { Fragment, useEffect, useState } from 'react';
-import FilmCardComponent from '../../components/film-card/film-card.component';
+import FilmCard from '../../components/film-card/film-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFavorite, getFilms, getPromo } from '../../store/films/films.api-actions';
-import PromoFilm from '../../components/promo-film/promo-film.component';
+import PromoFilm from '../../components/promo-film/promo-film';
 import { filterGenreFilms, selectPromo } from '../../store/films/films.selector';
-import SideMenuComponent from '../../components/side-menu/side-menu.component';
-import FooterComponent from '../../components/footer/footer.component';
+import SideMenu from '../../components/side-menu/side-menu';
+import Footer from '../../components/footer/footer';
 
 
-function MainPage(): JSX.Element {
+function Main(): JSX.Element {
   const dispatch = useAppDispatch();
   const promoFilm = useAppSelector(selectPromo);
   const filteredFilms = useAppSelector(filterGenreFilms);
@@ -40,12 +40,12 @@ function MainPage(): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <SideMenuComponent/>
+          <SideMenu/>
           <div className="catalog__films-list">
             {filteredFilms.map((film, index) => {
               if (index <= showMore ) {
                 return (
-                  <FilmCardComponent
+                  <FilmCard
                     key={`film-${film.name}`}
                     filmCard={film}
                   />
@@ -67,10 +67,10 @@ function MainPage(): JSX.Element {
             </div>
           )}
         </section>
-        <FooterComponent/>
+        <Footer/>
       </div>
     </Fragment>
   );
 }
 
-export default MainPage;
+export default Main;

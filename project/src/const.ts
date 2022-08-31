@@ -39,3 +39,15 @@ export enum FavoriteAction {
   REMOTE = 0,
   ADD = 1,
 }
+
+export const MAX_LENGTH_REVIEW = 400;
+export const MIN_LENGTH_REVIEW = 50;
+
+export const tabPanelNames = ['Overview', 'Details', 'Reviews'];
+
+export enum NameSeverity {
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info',
+  SUCCESS = 'success',
+}

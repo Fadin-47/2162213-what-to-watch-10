@@ -5,7 +5,7 @@ import { selectSingleFilm } from '../../store/films/films.selector';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useVideoPlayer } from '../../hooks/use-video-player';
 
-function PlayerPage() {
+function Player() {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -85,4 +85,4 @@ function PlayerPage() {
   );
 }
 
-export default PlayerPage;
+export default Player;

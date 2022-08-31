@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function PlayButton({filmId, videoLink}: PropsWithChildren<{filmId: number, videoLink: string}>) {
+export default function PlayButton({filmId}: PropsWithChildren<{filmId: number}>) {
 
   return (
     <Link style={{ textDecoration: 'none', marginRight: 16 }} to={`/player/${filmId}`}>

@@ -36,9 +36,18 @@ export const useVideoPlayer = (video: HTMLVideoElement | null) => {
 
   useEffect(() => {
     if (video) {
-      playerOption.isFullscreen ? video.requestFullscreen() : document.exitFullscreen();
+      playerOption.isFullscreen && video.requestFullscreen();
     }
   },[playerOption.isFullscreen, video]);
+
+  useEffect(() => {
+    if (document.fullscreenElement === null) {
+      setPlayerOption({
+        ...playerOption,
+        isFullscreen: false
+      });
+    }
+  }, [playerOption.isFullscreen, document.fullscreenElement]);
 
   const handleTimeProgress = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
     if (video?.currentTime && video?.duration) {

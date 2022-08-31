@@ -1,12 +1,14 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { AuthorizationStatus, FavoriteAction } from '../../const';
+import { AppRoute, AuthorizationStatus, FavoriteAction } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFavorite, postFavorite } from '../../store/films/films.api-actions';
 import { selectFavorites } from '../../store/films/films.selector';
 import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyListButton({filmId, isFavorite}: PropsWithChildren<{filmId: number, isFavorite: boolean}>) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getFavorite());
     dispatch(postFavorite({ filmId: 2,
@@ -17,11 +19,12 @@ export default function MyListButton({filmId, isFavorite}: PropsWithChildren<{fi
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   const onPostFavorite = () => {
-    dispatch(postFavorite({ filmId: filmId, status: isFavorite ? FavoriteAction.REMOTE : FavoriteAction.ADD}));
+    authorizationStatus === AuthorizationStatus.Auth
+      ? dispatch(postFavorite({ filmId: filmId, status: isFavorite ? FavoriteAction.REMOTE : FavoriteAction.ADD}))
+      : navigate(`${AppRoute.Login}`);
   };
   return (
     <button
-      disabled={authorizationStatus !== AuthorizationStatus.Auth}
       onClick={onPostFavorite}
       className="btn btn--list film-card__button"
       type="button"

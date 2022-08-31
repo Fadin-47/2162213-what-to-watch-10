@@ -1,10 +1,10 @@
-import LogoComponent from '../logo/logo.component';
+import Logo from '../logo/logo';
 
-export default function FooterComponent(): JSX.Element {
+export default function Footer(): JSX.Element {
   return (
     <footer className="page-footer">
       <div className="logo">
-        <LogoComponent styleLogo={'logo__link logo__link--light'}/>
+        <Logo styleLogo={'logo__link logo__link--light'}/>
       </div>
       <div className="copyright">
         <p>© 2019 What to watch Ltd.</p>

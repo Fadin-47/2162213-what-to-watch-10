@@ -1,29 +1,29 @@
-import HeaderComponent from '../../components/header/header.component';
-import FooterComponent from '../../components/footer/footer.component';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
 import { selectFavorites } from '../../store/films/films.selector';
-import FilmCardComponent from '../../components/film-card/film-card.component';
+import FilmCard from '../../components/film-card/film-card';
 
 
-function MyListPage() {
+function MyList() {
   const favoriteFilms = useAppSelector(selectFavorites);
 
   return (
     <div className="user-page">
-      <HeaderComponent styleHeader={'page-header user-page__head'} >
+      <Header styleHeader={'page-header user-page__head'} >
         <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{favoriteFilms.length}</span></h1>
-      </HeaderComponent>
+      </Header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__films-list">
           {favoriteFilms.map((favorite) => (
-            <FilmCardComponent key={favorite.name} filmCard={favorite}/>
+            <FilmCard key={favorite.name} filmCard={favorite}/>
           ))}
         </div>
       </section>
-      <FooterComponent/>
+      <Footer/>
     </div>
   );
 }
 
-export default MyListPage;
+export default MyList;

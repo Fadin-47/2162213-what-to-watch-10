@@ -4,7 +4,7 @@ import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { checkAuthAction } from './store/user-process/user-process.api-actions';
-import ToastsComponent from './components/toasts/toasts.component';
+import Toasts from './components/toasts/toasts';
 
 store.dispatch(checkAuthAction());
 const selectRequestError = store.getState().USER.requestError;
@@ -17,7 +17,7 @@ root.render(
     <Provider store={store}>
       <App/>
       {selectRequestError && (
-        <ToastsComponent severity={selectRequestError.severity} message={selectRequestError.message} />
+        <Toasts severity={selectRequestError.severity} message={selectRequestError.message} />
       )}
     </Provider>
   </React.StrictMode>,

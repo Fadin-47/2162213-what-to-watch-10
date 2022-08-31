@@ -3,7 +3,7 @@ import { AuthorizationStatus, RequestStatus } from '../const';
 import { IFilmData } from './film-data';
 import { ICommentData } from './comment-data';
 import { IUserData } from './user-data';
-import { IToasts } from '../components/toasts/toasts.component';
+import { IToasts } from './components-data';
 
 
 export interface IUserProcessStore {

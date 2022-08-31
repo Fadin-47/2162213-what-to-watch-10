@@ -1,15 +1,15 @@
-import UserComponent from '../user/user.component';
+import User from '../user/user';
 import { PropsWithChildren } from 'react';
-import LogoComponent from '../logo/logo.component';
+import Logo from '../logo/logo';
 
-export default function HeaderComponent({
+export default function Header({
   styleHeader, children
 }: PropsWithChildren<{ styleHeader: string, children?: JSX.Element }>): JSX.Element {
   return(
     <header className={styleHeader}>
-      <LogoComponent/>
+      <Logo/>
       {children}
-      <UserComponent/>
+      <User/>
     </header>
   );
 }
