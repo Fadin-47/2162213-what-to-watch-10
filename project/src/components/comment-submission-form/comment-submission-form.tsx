@@ -81,7 +81,7 @@ function CommentSubmissionForm({filmId}: PropsWithChildren<{filmId: number}>) {
           <textarea
             disabled={requestPostCommentStatus === RequestStatus.LOADING}
             onChange={(e) => reviewText.onChange(e)}
-            onBlur={(e) => reviewText.onBlur(e)}
+            onBlur={reviewText.onBlur}
             value={reviewText.value}
             className="add-review__textarea"
             name="review-text"

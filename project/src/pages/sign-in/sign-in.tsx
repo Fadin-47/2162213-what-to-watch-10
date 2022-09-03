@@ -54,7 +54,7 @@ function SignIn() {
             <div className="sign-in__field">
               <input
                 onChange={(e) => email.onChange(e)}
-                onBlur={(e) => email.onBlur(e)}
+                onBlur={email.onBlur}
                 value={email.value}
                 className="sign-in__input"
                 type="email"
@@ -67,7 +67,7 @@ function SignIn() {
             <div className="sign-in__field">
               <input
                 onChange={(e) => password.onChange(e)}
-                onBlur={(e) => password.onBlur(e)}
+                onBlur={password.onBlur}
                 value={password.value}
                 className="sign-in__input"
                 type="password"

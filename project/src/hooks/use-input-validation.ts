@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export interface IValidationsProperties {
   minLength: number;
@@ -66,7 +66,7 @@ export const useInputValidation = (initValue: string, validations: IValidationsP
     setValue(e.target.value);
   };
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onBlur = () => {
     setDirty(true);
   };
 
