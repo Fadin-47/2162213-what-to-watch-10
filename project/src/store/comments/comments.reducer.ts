@@ -35,9 +35,6 @@ export const CommentsReducer = createSlice({
       .addCase(postComment.fulfilled, (state, action) => {
         state.requestPostCommentStatus = RequestStatus.SUCCESS;
         state.comments = action.payload;
-        setTimeout(() => {
-          setRequestPostCommentStatus(RequestStatus.IDLE);
-        }, 1000);
       })
       .addCase(postComment.rejected, (state) => {
         state.requestPostCommentStatus = RequestStatus.ERROR;

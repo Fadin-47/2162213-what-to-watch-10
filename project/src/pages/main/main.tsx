@@ -6,6 +6,7 @@ import PromoFilm from '../../components/promo-film/promo-film';
 import { filterGenreFilms, selectPromo } from '../../store/films/films.selector';
 import SideMenu from '../../components/side-menu/side-menu';
 import Footer from '../../components/footer/footer';
+import { ShowMoreParams } from '../../const';
 
 
 function Main(): JSX.Element {
@@ -18,18 +19,18 @@ function Main(): JSX.Element {
     dispatch(getFavorite());
   }, [dispatch]);
 
-  const [showMore, setShowMore] = useState<number>(0);
+  const [showMore, setShowMore] = useState<number>(ShowMoreParams.DEFAULT);
   useEffect(() => {
     if (filteredFilms.length) {
-      filteredFilms.length > 7 ? setShowMore(7) : setShowMore(filteredFilms.length);
+      filteredFilms.length > ShowMoreParams.START_VIEW ? setShowMore(ShowMoreParams.START_VIEW) : setShowMore(filteredFilms.length);
     }
   }, [filteredFilms]);
 
-  const onShowMore = () => {
-    if ((showMore + 8) > filteredFilms.length) {
+  const handleShowMore = () => {
+    if ((showMore + ShowMoreParams.HOW_ADD) > filteredFilms.length) {
       setShowMore(filteredFilms.length);
     } else {
-      setShowMore(showMore + 8);
+      setShowMore(showMore + ShowMoreParams.HOW_ADD);
     }
   };
   return (
@@ -58,7 +59,7 @@ function Main(): JSX.Element {
           {showMore !== filteredFilms.length && (
             <div className="catalog__more">
               <button
-                onClick={onShowMore}
+                onClick={handleShowMore}
                 className="catalog__button"
                 type="button"
               >

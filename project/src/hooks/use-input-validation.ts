@@ -15,9 +15,9 @@ const useValidation = (value: string, validations: IValidationsProperties) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [inputValid, setInputValid] = useState(false);
-  const regexEmail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/i;
-  const regexPassword = /^(?=^.{2,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[a-zA-Z]).*$/i;
   useEffect(() => {
+    const regexEmail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/i;
+    const regexPassword = /^(?=^.{2,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[a-zA-Z]).*$/i;
     for (const validation in validations) {
       switch (validation) {
         case 'minLength':

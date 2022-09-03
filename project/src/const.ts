@@ -40,8 +40,16 @@ export enum FavoriteAction {
   ADD = 1,
 }
 
-export const MAX_LENGTH_REVIEW = 400;
-export const MIN_LENGTH_REVIEW = 50;
+export enum ReviewTextLimit {
+  MAX_LENGTH_REVIEW = 400,
+  MIN_LENGTH_REVIEW = 50,
+}
+
+export enum TabNumericName {
+  ZERO = 0,
+  FIRST = 1,
+  SECOND = 2,
+}
 
 export const tabPanelNames = ['Overview', 'Details', 'Reviews'];
 
@@ -51,3 +59,13 @@ export enum NameSeverity {
   INFO = 'info',
   SUCCESS = 'success',
 }
+
+export const TIME_RESET_TOASTS = 5000;
+
+export enum ShowMoreParams {
+  DEFAULT = 0,
+  START_VIEW = 7,
+  HOW_ADD = 8,
+}
+
+export const COUNT_MORE_LIKE_THIS = 4;

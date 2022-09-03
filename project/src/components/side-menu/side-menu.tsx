@@ -6,7 +6,7 @@ export default function SideMenu() {
   const dispatch = useAppDispatch();
   const allGenre = useAppSelector(selectAllGenres);
   const choseGenre = useAppSelector(selectGenre);
-  const onChangeGenre = (genre: string | null) => (e: { preventDefault: () => void; }) => {
+  const handleChangeGenre = (genre: string | null) => (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     dispatch(setChangeGenre(genre));
   };
@@ -20,7 +20,17 @@ export default function SideMenu() {
             : 'catalog__genres-item'
         }
       >
-        <a href="javascript:void(0);" style={{ cursor: 'pointer' }} onClick={onChangeGenre(null)} className="catalog__genres-link">All genres</a>
+        <button
+          style={{
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            border: 'none',
+          }}
+          onClick={handleChangeGenre(null)}
+          className="catalog__genres-link"
+        >
+          All genres
+        </button>
       </li>
       {allGenre.map((genre) => (
         <li
@@ -31,7 +41,17 @@ export default function SideMenu() {
               : 'catalog__genres-item'
           }
         >
-          <a href="javascript:void(0);" style={{ cursor: 'pointer' }} onClick={onChangeGenre(genre)} className="catalog__genres-link">{genre}</a>
+          <button
+            style={{
+              cursor: 'pointer',
+              backgroundColor: 'transparent',
+              border: 'none',
+            }}
+            onClick={handleChangeGenre(genre)}
+            className="catalog__genres-link"
+          >
+            {genre}
+          </button>
         </li>
       ))}
     </ul>

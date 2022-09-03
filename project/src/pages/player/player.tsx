@@ -20,8 +20,8 @@ function Player() {
 
   const {
     playerOption,
-    onPlayPauseVideo,
-    onFullScreenOnOff,
+    handlePlayPauseVideo,
+    handleFullScreenOnOff,
     handleTimeProgress,
   } = useVideoPlayer(video.current);
 
@@ -54,7 +54,7 @@ function Player() {
 
             <div className="player__controls-row">
               {!playerOption.isPlaying && (
-                <button onClick={onPlayPauseVideo} type="button" className="player__play">
+                <button onClick={handlePlayPauseVideo} type="button" className="player__play">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -62,7 +62,7 @@ function Player() {
                 </button>
               )}
               {playerOption.isPlaying && (
-                <button onClick={onPlayPauseVideo} type="button" className="player__play">
+                <button onClick={handlePlayPauseVideo} type="button" className="player__play">
                   <svg viewBox="0 0 14 21" width="14" height="21">
                     <use xlinkHref="#pause"></use>
                   </svg>
@@ -71,7 +71,7 @@ function Player() {
               )}
               <div className="player__name">{singleFilm.name}</div>
 
-              <button onClick={onFullScreenOnOff} type="button" className="player__full-screen">
+              <button onClick={handleFullScreenOnOff} type="button" className="player__full-screen">
                 <svg viewBox="0 0 27 27" width="27" height="27">
                   <use xlinkHref="#full-screen"></use>
                 </svg>

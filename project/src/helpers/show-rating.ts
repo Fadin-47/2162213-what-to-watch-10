@@ -1,4 +1,4 @@
-export default function displayRating (rating: number): string {
+export default function showRating (rating: number): string {
   if (rating <= 3) {
     return 'Bad';
   } else if (rating > 3 && rating <= 5) {

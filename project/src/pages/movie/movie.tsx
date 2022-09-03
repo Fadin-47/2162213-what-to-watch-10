@@ -11,7 +11,7 @@ import TabPanelMoreInfoFilm
 import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
 import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, COUNT_MORE_LIKE_THIS } from '../../const';
 import { setInitSingleFilm } from '../../store/films/films.reducer';
 
 
@@ -135,7 +135,7 @@ function Movie(): JSX.Element {
               <h2 className="catalog__title">More like this</h2>
               <div className="catalog__films-list">
                 {singleFilm && similarFilms.filter((similar) => similar.id !== singleFilm.id).map((similar, index) => (
-                  index < 4
+                  index < COUNT_MORE_LIKE_THIS
                     ? <FilmCard key={`film-${similar.name}`} filmCard={similar}/>
                     : null
                 ))}

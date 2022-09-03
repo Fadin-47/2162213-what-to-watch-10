@@ -1,4 +1,4 @@
-export default function timeEndNormalization (secondTimeLine: number): string {
+export default function countEndTime (secondTimeLine: number): string {
   const date = new Date(secondTimeLine * 1000);
   const hour = date.getUTCHours();
   let timeNormalization: string;

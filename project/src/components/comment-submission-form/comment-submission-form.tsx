@@ -3,7 +3,7 @@ import { useInputValidation } from '../../hooks/use-input-validation';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postComment } from '../../store/comments/comments.api-actions';
 import { selectRequestPostCommentStatus } from '../../store/comments/comments.selector';
-import { MAX_LENGTH_REVIEW, MIN_LENGTH_REVIEW, RequestStatus } from '../../const';
+import { RequestStatus, ReviewTextLimit } from '../../const';
 import { useNavigate } from 'react-router-dom';
 import { setRequestPostCommentStatus } from '../../store/comments/comments.reducer';
 import Loader from '../loader/loader';
@@ -33,7 +33,7 @@ function CommentSubmissionForm({filmId}: PropsWithChildren<{filmId: number}>) {
       filmId: filmId
     }));
   };
-  const reviewText = useInputValidation('', { isEmpty: true, minLength: MIN_LENGTH_REVIEW, maxLength: MAX_LENGTH_REVIEW});
+  const reviewText = useInputValidation('', { isEmpty: true, minLength: ReviewTextLimit.MIN_LENGTH_REVIEW, maxLength: ReviewTextLimit.MAX_LENGTH_REVIEW});
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
@@ -71,8 +71,8 @@ function CommentSubmissionForm({filmId}: PropsWithChildren<{filmId: number}>) {
           </div>
         </div>
         <div>
-          {reviewText.maxLength && reviewText.isDirty && <div>Превышенно количество символов. Максимум {MAX_LENGTH_REVIEW}</div>}
-          {reviewText.minLength && reviewText.isDirty && <div>Не достаточное количество символов. Минимум {MIN_LENGTH_REVIEW}</div>}
+          {reviewText.maxLength && reviewText.isDirty && <div>Превышенно количество символов. Максимум {ReviewTextLimit.MAX_LENGTH_REVIEW}</div>}
+          {reviewText.minLength && reviewText.isDirty && <div>Не достаточное количество символов. Минимум {ReviewTextLimit.MIN_LENGTH_REVIEW}</div>}
           {requestPostCommentStatus === RequestStatus.ERROR && (
             <div>Ошибка оправки запроса</div>
           )}

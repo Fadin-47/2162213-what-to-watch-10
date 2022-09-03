@@ -3,14 +3,15 @@ import { IFilmData } from '../../types/film-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getComments } from '../../store/comments/comments.api-actions';
 import { selectComments } from '../../store/comments/comments.selector';
-import displayRating from '../../helpers/display-rating';
-import { tabPanelNames } from '../../const';
+import showRating from '../../helpers/show-rating';
+import { TabNumericName, tabPanelNames } from '../../const';
 
 export default function TabPanelMoreInfoFilm({singleFilm}: PropsWithChildren<{singleFilm: IFilmData}>) {
   const dispatch = useAppDispatch();
   const comments = useAppSelector(selectComments);
-  const [tab, setTab] = useState(0);
-  const onChangeGenre = (chooseTab:number) => (e: { preventDefault: () => void; }) => {
+  const [tab, setTab] = useState(TabNumericName.ZERO);
+
+  const handleChangeGenre = (chooseTab: number) => (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setTab(chooseTab);
   };
@@ -32,17 +33,27 @@ export default function TabPanelMoreInfoFilm({singleFilm}: PropsWithChildren<{si
                   : 'film-nav__item'
               }
             >
-              <a href="javascript:void(0);" style={{ cursor: 'pointer' }} onClick={onChangeGenre(index)} className="film-nav__link">{name}</a>
+              <button
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
+                onClick={handleChangeGenre(index)}
+                className="film-nav__link"
+              >
+                {name}
+              </button>
             </li>
           ))}
         </ul>
       </nav>
-      {tab === 0 && (
+      {tab === TabNumericName.ZERO && (
         <Fragment>
           <div className="film-rating">
             <div className="film-rating__score">{singleFilm.rating}</div>
             <p className="film-rating__meta">
-              <span className="film-rating__level">{displayRating(Number(singleFilm.rating))}</span>
+              <span className="film-rating__level">{showRating(Number(singleFilm.rating))}</span>
               <span className="film-rating__count">{`${singleFilm.scoresCount} ratings`}</span>
             </p>
           </div>
@@ -59,7 +70,7 @@ export default function TabPanelMoreInfoFilm({singleFilm}: PropsWithChildren<{si
           </div>
         </Fragment>
       )}
-      {tab === 1 && (
+      {tab === TabNumericName.FIRST && (
         <div className="film-card__text film-card__row">
           <div className="film-card__text-col">
             <p className="film-card__details-item">
@@ -92,7 +103,7 @@ export default function TabPanelMoreInfoFilm({singleFilm}: PropsWithChildren<{si
           </div>
         </div>
       )}
-      {tab === 2 && (
+      {tab === TabNumericName.SECOND && (
         <div className="film-card__reviews-col">
           {comments.length
             ? (

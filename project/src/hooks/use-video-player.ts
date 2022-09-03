@@ -1,5 +1,5 @@
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
-import timeEndNormalization from '../helpers/timeend-normalization';
+import { ChangeEvent, useEffect, useState } from 'react';
+import countEndTime from '../helpers/count-end-time';
 
 interface IVideoPlayerState {
   isPlaying: boolean,
@@ -16,14 +16,14 @@ export const useVideoPlayer = (video: HTMLVideoElement | null) => {
     timeEnd: '',
   });
 
-  const onPlayPauseVideo = () => {
+  const handlePlayPauseVideo = () => {
     setPlayerOption({
       ...playerOption,
       isPlaying: !playerOption.isPlaying
     });
   };
 
-  const onFullScreenOnOff = () => {
+  const handleFullScreenOnOff = () => {
     setPlayerOption({
       ...playerOption,
       isFullscreen: !playerOption.isFullscreen
@@ -49,14 +49,14 @@ export const useVideoPlayer = (video: HTMLVideoElement | null) => {
     }
   }, [playerOption.isFullscreen, document.fullscreenElement]);
 
-  const handleTimeProgress = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
+  const handleTimeProgress = () => {
     if (video?.currentTime && video?.duration) {
       const progress = (video.currentTime / video.duration) * 100;
       const timeEnd = (video?.duration - video?.currentTime);
       setPlayerOption({
         ...playerOption,
         timeLine: progress,
-        timeEnd: timeEndNormalization(timeEnd),
+        timeEnd: countEndTime(timeEnd),
       });
     }
   };
@@ -74,8 +74,8 @@ export const useVideoPlayer = (video: HTMLVideoElement | null) => {
 
   return {
     playerOption,
-    onPlayPauseVideo,
-    onFullScreenOnOff,
+    handlePlayPauseVideo,
+    handleFullScreenOnOff,
     handleChangeTimeLine,
     handleTimeProgress,
   };

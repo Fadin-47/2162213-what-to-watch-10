@@ -11,21 +11,19 @@ export default function MyListButton({filmId, isFavorite}: PropsWithChildren<{fi
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getFavorite());
-    dispatch(postFavorite({ filmId: 2,
-      status: FavoriteAction.ADD}));
   }, [dispatch]);
 
   const favorite = useAppSelector(selectFavorites);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
-  const onPostFavorite = () => {
+  const handlePostFavorite = () => {
     authorizationStatus === AuthorizationStatus.Auth
       ? dispatch(postFavorite({ filmId: filmId, status: isFavorite ? FavoriteAction.REMOTE : FavoriteAction.ADD}))
       : navigate(`${AppRoute.Login}`);
   };
   return (
     <button
-      onClick={onPostFavorite}
+      onClick={handlePostFavorite}
       className="btn btn--list film-card__button"
       type="button"
     >

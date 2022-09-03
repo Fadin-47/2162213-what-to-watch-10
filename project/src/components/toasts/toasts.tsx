@@ -1,6 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { IToasts } from '../../types/components-data';
 import colorToasts from '../../helpers/toasts-colors';
+import { TIME_RESET_TOASTS } from '../../const';
 
 export default function Toasts({severity, message }: PropsWithChildren<IToasts>) {
 
@@ -9,7 +10,7 @@ export default function Toasts({severity, message }: PropsWithChildren<IToasts>)
   useEffect(() => {
     setTimeout(() => {
       setToastsParam(null);
-    }, 5000);
+    }, TIME_RESET_TOASTS);
   },[toastsParam]);
 
   return (

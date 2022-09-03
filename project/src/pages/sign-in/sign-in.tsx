@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { FormEvent, useEffect } from 'react';
-import { IAuthData } from '../../types/auth-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/user-process/user-process.api-actions';
 import { useInputValidation } from '../../hooks/use-input-validation';
@@ -20,20 +19,16 @@ function SignIn() {
     }
   }, [auth, navigate]);
 
-  const onSubmit = (inputAuthData: IAuthData) => {
-    dispatch(loginAction(inputAuthData));
-  };
-
   const email = useInputValidation('', { isEmail: true, isEmpty: true, minLength: 5, maxLength: 15});
   const password = useInputValidation('', { isPassword: true, isEmpty: true, minLength: 2, maxLength: 12});
 
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit({
+    dispatch(loginAction({
       login: email.value,
       password: password.value,
-    });
+    }));
   };
 
   return (
