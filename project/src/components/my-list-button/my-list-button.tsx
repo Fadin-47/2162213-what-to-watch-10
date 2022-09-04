@@ -9,9 +9,12 @@ import { useNavigate } from 'react-router-dom';
 export default function MyListButton({filmId, isFavorite}: PropsWithChildren<{filmId: number, isFavorite: boolean}>) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const auth = useAppSelector(selectAuthorizationStatus);
   useEffect(() => {
-    dispatch(getFavorite());
-  }, [dispatch]);
+    if (auth === AuthorizationStatus.Auth) {
+      dispatch(getFavorite());
+    }
+  }, [dispatch, auth]);
 
   const favorite = useAppSelector(selectFavorites);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);

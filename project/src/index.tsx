@@ -4,10 +4,13 @@ import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { checkAuthAction } from './store/user-process/user-process.api-actions';
-import Toasts from './components/toasts/toasts';
+import { getToken } from './services/token';
 
-store.dispatch(checkAuthAction());
-const selectRequestError = store.getState().USER.requestError;
+const token = getToken();
+if (token) {
+  store.dispatch(checkAuthAction());
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
@@ -16,9 +19,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App/>
-      {selectRequestError && (
-        <Toasts severity={selectRequestError.severity} message={selectRequestError.message} />
-      )}
     </Provider>
   </React.StrictMode>,
 );

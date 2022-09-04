@@ -1,11 +1,10 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IFilmData } from '../../types/film-data';
 import './film-card.css';
 
 function FilmCard({ filmCard }: PropsWithChildren<{ filmCard: IFilmData }>): JSX.Element {
   const [isHovering, setIsHovering] = useState(false);
-  const {pathname} = useLocation();
   const videoPreview = useRef<HTMLVideoElement>(null);
   let timerId: NodeJS.Timeout;
 
@@ -74,7 +73,7 @@ function FilmCard({ filmCard }: PropsWithChildren<{ filmCard: IFilmData }>): JSX
       <h3 className="small-film-card__title">
         <Link
           className="small-film-card__link"
-          to={pathname.length === 1 ? `/films/${filmCard.id}` : filmCard.id.toString()}
+          to={`/films/${filmCard.id}`}
           key={filmCard.id}
         >
           {filmCard.name}

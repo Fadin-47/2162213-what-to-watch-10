@@ -60,7 +60,7 @@ export enum NameSeverity {
   SUCCESS = 'success',
 }
 
-export const TIME_RESET_TOASTS = 5000;
+export const TIME_RESET_TOASTS = 3000;
 
 export enum ShowMoreParams {
   DEFAULT = 0,

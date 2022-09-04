@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 export interface IValidationsProperties {
   minLength: number;
-  maxLength: number;
+  maxLength?: number;
   isEmpty: boolean;
   isEmail?: boolean;
   isPassword?: boolean;
@@ -24,7 +24,7 @@ const useValidation = (value: string, validations: IValidationsProperties) => {
           value.length < validations[validation] ? setMinLength(true) : setMinLength(false);
           break;
         case 'maxLength':
-          value.length > validations[validation] ? setMaxLength(true) : setMaxLength(false);
+          value.length > validations[validation]! ? setMaxLength(true) : setMaxLength(false);
           break;
         case 'isEmpty':
           value ? setEmpty(false) : setEmpty(true);

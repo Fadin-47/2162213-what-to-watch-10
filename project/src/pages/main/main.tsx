@@ -6,18 +6,25 @@ import PromoFilm from '../../components/promo-film/promo-film';
 import { filterGenreFilms, selectPromo } from '../../store/films/films.selector';
 import SideMenu from '../../components/side-menu/side-menu';
 import Footer from '../../components/footer/footer';
-import { ShowMoreParams } from '../../const';
+import { AuthorizationStatus, ShowMoreParams } from '../../const';
+import { selectAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
   const promoFilm = useAppSelector(selectPromo);
   const filteredFilms = useAppSelector(filterGenreFilms);
+  const auth = useAppSelector(selectAuthorizationStatus);
   useEffect(() => {
     dispatch(getFilms());
     dispatch(getPromo());
-    dispatch(getFavorite());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (auth === AuthorizationStatus.Auth) {
+      dispatch(getFavorite());
+    }
+  },[dispatch, auth]);
 
   const [showMore, setShowMore] = useState<number>(ShowMoreParams.DEFAULT);
   useEffect(() => {
